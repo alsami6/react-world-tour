@@ -7,6 +7,7 @@ const Countries = () => {
 
     const [conutries , setCountries] = useState([])
     const [visitedCountries, setVisitedCountries] = useState([]);
+    const [visitedFlags, setVisitedFlags] = useState([])
 
     useEffect(()=>{
         fetch('https://restcountries.com/v3.1/all')
@@ -20,6 +21,11 @@ const Countries = () => {
         setVisitedCountries(newVisitedCountries);
     }
  
+    const handleVisitedFlags = flag => {
+        const newVisitedFlags = [...visitedFlags, flag];
+        setVisitedFlags(newVisitedFlags)
+    }
+
     return (
         <div>
             <h3>Countries: {conutries.length}</h3>
@@ -31,9 +37,14 @@ const Countries = () => {
                         }
                     </ul>
                 </div>
+                <div className="flag-container">
+                        {
+                            visitedFlags.map((flag, idx) => <img key={idx} src={flag}></img>)
+                        }
+                </div>
             <div className="country-container">
             {
-                conutries.map(country => <Country key={country.cca3} handleVisitedCountry={handleVisitedCountry} country={country}></Country>)
+                conutries.map(country => <Country key={country.cca3} handleVisitedCountry={handleVisitedCountry} handleVisitedFlags={handleVisitedFlags} country={country}></Country>)
             }    
             </div>
         </div>
